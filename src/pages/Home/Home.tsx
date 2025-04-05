@@ -16,7 +16,7 @@ const Home = () => {
             <div id="useCase">
                 <UseCase />
             </div>
-            <div id="whatNew">
+            <div id="whatNew" className="bg-white">
                 <WhatNew />
             </div>
             

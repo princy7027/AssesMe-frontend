@@ -8,7 +8,7 @@ const WhatNew = () => {
     <div className="py-20 px-8">
       <div className="max-w-6xl my-0 mx-auto mt-10">
         <div className="flex flex-col gap-5 text-center mx-44 mb-10 ">
-          <h1 className="font-semibold text-9xl text-[#422b72]">
+          <h1 className="font-semibold text-5xl text-[#422b72] mb-4">
             What's new at AssessMe?
           </h1>
         </div>

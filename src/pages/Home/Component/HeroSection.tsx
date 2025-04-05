@@ -24,8 +24,8 @@ const HeroSection = () => {
                     <div className="mt-8 mb-3 font-bold flex justify-start items-center gap-x-8 gap-y-5	">
                         <Button
                             type="submit"
-                            onClick={() => navigate("/Cmpinfo")}
-                            className="bg-[#E57CD8] px-9 py-4 text-base items-center rounded-full text-center  hover:bg-[#7B7EA8] h-14"
+                            onClick={() => navigate("/register")}
+                            className="bg-[#f0acac] px-9 py-4 text-base items-center rounded-full text-center  hover:bg-[#FF884D] h-14"
                         >
                             Register yourself
                         </Button>

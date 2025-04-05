@@ -30,7 +30,7 @@ const Header = () => {
               <Button
                 type="submit"
                 onClick={() => navigate("/login")}
-                className="hover:bg-white  md:outline-2  font-bold border-2	w-32 outline-[#422b72] rounded-[10px] hover:text-[#422b72] bg-[#422b72] text-white"
+                className="hover:bg-[#FCFCFC]  md:outline-2 py-5 text-base font-bold border-2	w-32 outline-[#FF884D] rounded-[10px] hover:text-[#FF884D] bg-[#FF884D] text-white"
               >
                 LogIn
               </Button>

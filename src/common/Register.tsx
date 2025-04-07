@@ -10,19 +10,21 @@ import image from "@/assets/registerlogo.png";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { usePostUserMutation } from "@/store/services/Register.service";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
-  //   const [postLogin] = usePostLoginMutation();
-  //   const { setToken } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof regiSchema>>({
     resolver: zodResolver(regiSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
+      name: "Princy",
+      email: "princy@gmail.com",
+      password: "pri@123",
+     
     },
   });
 
@@ -30,8 +32,35 @@ const Register = () => {
     sessionStorage.clear();
   }, []);
 
-  const onSubmit =(e)=>{console.log(e);}
-  return (
+  // const [clickCount, setClickCount] = useState(0);
+  // const handleClick = () => {
+  //   setClickCount(prev => prev + 1);
+  //   console.log("Button clicked", clickCount + 1);
+  // };
+  
+  const onSubmit = async (e: z.infer<typeof regiSchema>) => {
+    const formData = new FormData();
+    console.log(formData,"formdata");
+    formData.append("password", e.password);
+    formData.append("name", e.name);
+    formData.append("email", e.email);
+   
+
+    try {
+      const response = await axios.post("http://localhost:3000/auth/signup", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response?.data?.success) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Error creating company:", error);
+    }
+  };
+    return (
     <>
       <div className="grid h-[100vh] p-5 bg-[#FDF1EC]">
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-10 lg:px-40 gap-4">
@@ -106,9 +135,11 @@ const Register = () => {
                       </FormItem>
                     )}
                   />
+                  
                 </div>
                 <Button
                   type="submit"
+                  // onClick={handleClick}
                   className="hover:text-black hover:bg-[#FDF1EC] w-full font-bold text-2xl py-6 rounded-xl bg-black text-white"
                   variant="outline"
                 >

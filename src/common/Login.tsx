@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { formSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -20,12 +14,15 @@ import { useNavigate } from "react-router-dom";
 import image from "../assets/signInlogo.png";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "@/context/ContextToken";
 
 const Login = () => {
-//   const { toast } = useToast();
+  //   const { toast } = useToast();
   const navigate = useNavigate();
-//   const [postLogin] = usePostLoginMutation();
-//   const { setToken } = useAuth();
+  const { setToken } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,47 +37,53 @@ const Login = () => {
     sessionStorage.clear();
   }, []);
 
-//   const formData = form.getValues();
-//   const onSubmit = async (e) => {
-//     const trimmedFormData = {
-//       email: formData.email.trim(),
-//       password: formData.password.trim()
-//     };
-//     try {
-//       const response = await postLogin(trimmedFormData);
-      
-//       if (response?.data?.success === false) {
-//         toast({
-//           className: "bg-red-500 text-white",
-//           title: response?.data?.message
-//         });
-//       }
-//       if (response.data.success) {
-//         sessionStorage.setItem("token", response.data.token);
-//         const decodedToken: any = jwtDecode(response.data.token ?? "");
-        
-//         if (decodedToken?.role === "Company") {
-//           setToken(response.data.token);
-//           navigate("/dashboard");
-//         }
-//         if (decodedToken?.role === "Employee") {
-//           navigate("/emp-dashboard");
-//         }
-//       }
-//     } catch (error) {
-//       console.error("Error during request:", error);
-//     }
-//   };
-const onSubmit =async(e)=>{ console.log(e);}
+  // Inside your component
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    // console.log("Submit button clicked. Form data:", data);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Login response:", response.data);
+
+      if (response.data.success) {
+        sessionStorage.setItem("token", response.data.token);
+        const decodedToken: any = jwtDecode(response.data.token ?? "");
+
+        if (decodedToken?.role === "student") {
+          setToken(response.data.token);
+          navigate("/std-dashboard");
+        }
+        if (decodedToken?.role === "admin") {
+          navigate("/admin-dashboard");
+        }
+        if (decodedToken?.role === "creator") {
+          navigate("/creator-dashboard");
+        }
+      } else {
+        console.error("Login failed:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
   return (
     <>
-
       <div className="grid h-[100vh] p-5 bg-[#FDF1EC]">
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-10 lg:px-40 gap-4">
           <h1 className="text-black font-bold text-3xl">Sign In</h1>
-          <p className="text-black text-xl">
-            Enter your email and password to signIn
-          </p>
+          <p className="text-black text-xl">Enter your email and password to signIn</p>
 
           <div className="flex flex-col gap-4 ">
             <Form {...form}>
@@ -113,7 +116,7 @@ const onSubmit =async(e)=>{ console.log(e);}
                         <div className="relative col-span-3">
                           <FormControl>
                             <Input
-                              type={showPassword ? "text" : "password"} 
+                              type={showPassword ? "text" : "password"}
                               className="trim col-span-3 border text-black rounded-[10px] focus:outline-[#404042] focus:text-black focus:font-semibold pr-12"
                               placeholder="password"
                               {...field}
@@ -121,12 +124,11 @@ const onSubmit =async(e)=>{ console.log(e);}
                           </FormControl>
                           <Button
                             type="button"
-                            onClick={() => setShowPassword(!showPassword)} 
+                            onClick={() => setShowPassword(!showPassword)}
                             className="absolute inset-y-0 right-0 flex items-center text-lg text-black bg-transparent hover:bg-transparent "
                           >
-                            {showPassword ? <FaEyeSlash/> : <FaEye/>}
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
                           </Button>
-
                         </div>
                         <FormMessage />
                       </FormItem>

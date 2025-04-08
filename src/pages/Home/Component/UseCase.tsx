@@ -1,5 +1,5 @@
 import billingInvoicing from "@/assets/billing-invoicing.avif";
-import ranking from "@/assets/ranking.png";
+import ranking from "@/assets/ranking-removebg-preview.png";
 
 const UseCase = () => {
   return (

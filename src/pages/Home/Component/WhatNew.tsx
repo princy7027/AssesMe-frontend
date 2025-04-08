@@ -1,8 +1,8 @@
 import React from 'react'
-import chartImage from '@/assets/chart.jpg'
-import computer from '@/assets/computer.jpeg'
+import chartImage from '@/assets/chart-removebg-preview.png'
+import computer from '@/assets/computer-removebg-preview.png'
 import ai from '@/assets/mind.png'
-import timer from '@/assets/timer.webp'
+import timer from '@/assets/timer-removebg-preview.png'
 const WhatNew = () => {
   return (
     <div className="py-20 px-8">

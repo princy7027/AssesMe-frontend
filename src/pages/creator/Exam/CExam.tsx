@@ -3,48 +3,87 @@ import React, { useState } from "react";
 import { FaBrain } from "react-icons/fa";
 import { FiUpload } from "react-icons/fi";
 import { IoIosListBox } from "react-icons/io";
+import ExamForm from "./ExamForm";
+import axios from "axios";
 
 const CExam = () => {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [questionType, setQuestionType] = useState("multiple");
+  const [step, setStep] = useState(1);
+  const token = sessionStorage.getItem("token");
 
+  const handleSubmit = async (data) => {
+    try {
+      
+      const response = await axios.post("http://localhost:3000/exam/create-exam", data,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }); 
+  
+      if (response?.data?.success) {
+        console.log("Success:", response.data);
+        sessionStorage.setItem('maxQuestions',response.data.numberOfQuestions);
+        setStep(3); // Move to next step
+      } else {
+        console.warn("Submission failed:", response.data?.message);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  };
+  
+
+  
   return (
     <div className="p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto">
       <div className="mt-10">
-        {/* Greeting */}
 
         {/* Choice */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div
-            onClick={() => setSelectedChoice("manual")}
-            className="bg-white rounded-xl shadow p-4  flex gap-8 items-center justify-center"
-          >
-            <div className="flex  items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
-              <IoIosListBox className="text-orange-500 text-2xl" />{" "}
+        {step === 1 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div
+              onClick={() => {
+                setSelectedChoice("manual");
+                setStep(2);
+              }}
+              className="bg-white rounded-xl shadow p-4  flex gap-8 items-center justify-center"
+            >
+              <div className="flex  items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
+                <IoIosListBox className="text-orange-500 text-2xl" />{" "}
+              </div>
+              <p className="text-xl text-gray-500 font-bold">Generate question manually</p>
             </div>
-            <p className="text-xl text-gray-500 font-bold">Generate question manually</p>
-          </div>
-          <div
-            onClick={() => setSelectedChoice("file")}
-            className="bg-white rounded-xl shadow p-4  flex gap-8 items-center justify-center"
-          >
-            <div className="flex  items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
-              <FiUpload className="text-orange-500 text-2xl" />{" "}
+            <div
+              onClick={() => {
+                setSelectedChoice("file");
+                setStep(2);
+              }}
+              className="bg-white rounded-xl shadow p-4  flex gap-8 items-center justify-center"
+            >
+              <div className="flex  items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
+                <FiUpload className="text-orange-500 text-2xl" />{" "}
+              </div>
+              <p className="text-xl text-gray-500 font-bold">Generate through file</p>
             </div>
-            <p className="text-xl text-gray-500 font-bold">Generate through file</p>
-          </div>
-          <div
-            onClick={() => setSelectedChoice("ai")}
-            className="bg-white rounded-xl shadow p-4  flex gap-8 items-center justify-center"
-          >
-            <div className="flex  items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
-              <FaBrain className=" text-blue-500 text-xl" />
+            <div
+              onClick={() => {
+                setSelectedChoice("ai");
+                setStep(2);
+              }}
+              className="bg-white rounded-xl shadow p-4  flex gap-8 items-center justify-center"
+            >
+              <div className="flex  items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
+                <FaBrain className=" text-blue-500 text-xl" />
+              </div>
+              <p className="text-xl text-gray-500 font-bold">Generate through ai</p>
             </div>
-            <p className="text-xl text-gray-500 font-bold">Generate through ai</p>
           </div>
-        </div>
+        )}
 
-        {selectedChoice === "manual" && (
+        {step === 2 && <ExamForm onSubmit={handleSubmit} />}
+        {step === 3 && selectedChoice === "manual" && (
           <div className="bg-white shadow rounded-xl p-6 flex text-black">
             {/* Sidebar - Question Types */}
             <div className="w-1/4 pr-6 bg-[#FFF4EE] p-2.5 rounded-xl">
@@ -113,14 +152,14 @@ const CExam = () => {
                 <input type="text" placeholder="Expected Answer" className="w-full mb-4 p-2 border rounded" />
               )}
 
-              <label className="block mb-2 font-medium">Score setting :</label>
-              <input type="number" defaultValue={1} className="w-full p-2 border rounded mb-4" />
+              <label className="block mb-2 font-medium">Tpoic name :</label>
+              <input type="string" className="w-full p-2 border rounded mb-4" />
 
               <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">Save</button>
             </div>
           </div>
         )}
-        {selectedChoice === "file" && (
+        {step === 3 && selectedChoice === "file" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             {/* Left - File Upload UI */}
             <div className="bg-gray-100 border border-dashed border-gray-300 rounded-xl p-6 space-y-4 shadow-md flex flex-col items-center justify-center text-center">
@@ -164,7 +203,7 @@ const CExam = () => {
             </div>
           </div>
         )}
-        {selectedChoice === "ai" && (
+        {step === 3 && selectedChoice === "ai" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             {/* Left side - Prompt input */}
             <div className="bg-gray-100 p-6 rounded-xl space-y-4 shadow-md">

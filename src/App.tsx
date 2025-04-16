@@ -9,8 +9,10 @@ import CDashboard from './pages/creator/CDashboard'
 import AdminRoutes from './routers/AdminRoutes'
 import StudentRoutes from './routers/StudentRoutes'
 import SDashboard from './pages/student/SDashboard'
-import ADashboard from './pages/admin/ADashboard'
-import CExam from './pages/creator/CExam'
+import ADashboard from './pages/creator/Exam/admin/ADashboard'
+import CExam from '@/pages/creator/Exam/CExam'
+import SDiscussion from './pages/student/SDiscussion'
+import SResult from './pages/student/SResult'
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
         <Route path='/creator-dashboard' element={<CreatorRoutes component={CDashboard} />}/>
         <Route path='/creator-exam' element={<CreatorRoutes component={CExam} />}/>
         <Route path='/std-dashboard' element={<StudentRoutes component={SDashboard} />}/>
+        <Route path='/std-discussion' element={<StudentRoutes component={SDiscussion} />}/>
+        <Route path='/std-result' element={<StudentRoutes component={SResult} />}/>
       </Routes>
     </BrowserRouter>
   )

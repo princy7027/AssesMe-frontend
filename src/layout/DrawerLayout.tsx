@@ -11,8 +11,9 @@ const adminItems=[
 const studentItems=[
     {label : "Dashboard",path:"/std-dashboard"},
     {label : "Exam",path:"/std-exam"},
-    {label :"LeaderBoard",path:"/std-leaderboard"},
+    // {label :"LeaderBoard",path:"/std-leaderboard"},
     {label :"Discussion",path:"/std-discussion"},
+    {label :"Result",path:"/std-result"},
     {label :"Profile",path:"/std-profile"}
 
 ]

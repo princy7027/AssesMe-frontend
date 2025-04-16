@@ -57,7 +57,9 @@
 * {
   @apply border-border;
 }
-
+.form-message {
+  @apply text-red-500 text-sm mt-1;
+}
 body {
   @apply bg-background text-foreground;
   --destructive: 0 62.8% 30.6%;

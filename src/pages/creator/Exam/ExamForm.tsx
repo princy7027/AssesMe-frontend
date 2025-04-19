@@ -1,4 +1,3 @@
-// components/ExamForm.tsx
 import { DateFormat } from "@/common/DateFormat";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -57,7 +56,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                   <FormControl>
                     <Input placeholder="Exam Name" {...field} />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -72,7 +71,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                   <FormControl>
                     <Input placeholder="Subject" {...field} />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -89,18 +88,32 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       <FormControl>
                         <Button
                           variant="outline"
-                          className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
                         >
-                          {field.value ? formatDate(field.value) : "Select date"}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-black" />
+                          {field.value ? field.value.toLocaleDateString() : "Pick a date"}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent align="start" className="w-auto p-0 ">
-                      <Calendar selected={field.value} onSelect={field.onChange} initialFocus className="text-black"/>
+                    <PopoverContent
+                      align="start"
+                      className="w-auto p-0 z-50 bg-white border border-gray-200 shadow-lg rounded-md"
+                    >
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(date) => {
+                          if (date) field.onChange(date);
+                        }}
+                        initialFocus
+                        className="text-black"
+                      />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -117,15 +130,29 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       <FormControl>
                         <Button
                           variant="outline"
-                          className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
                         >
-                          {field.value ? formatDate(field.value) : "Select date"}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          {field.value ? field.value.toLocaleDateString() : "Select date"}
+                          <CalendarIcon className="ml-auto h-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent align="start" className="w-auto p-0">
-                      <Calendar selected={field.value} onSelect={field.onChange} initialFocus />
+                    <PopoverContent
+                      align="start"
+                      className="w-full p-0 z-50 bg-white border border-gray-200 shadow-lg rounded-md"
+                    >
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(date) => {
+                          if (date) field.onChange(date);
+                        }}
+                        initialFocus
+                        className="text-black"
+                      />
                     </PopoverContent>
                   </Popover>
                   <FormMessage className="text-red-500 text-sm" />
@@ -148,7 +175,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -168,7 +195,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -188,7 +215,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -208,7 +235,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -223,12 +250,11 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                   <FormControl>
                     <Input placeholder="Any notes or instructions..." {...field} />
                   </FormControl>
-                  <FormMessage className="text-red-500 text-sm" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Submit Button */}
             <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg">
               Save & Next
             </Button>

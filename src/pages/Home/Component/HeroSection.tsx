@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 const HeroSection = () => {
     const navigate = useNavigate();
     return (
-        <div className="bg-[#FF884D] text-white p-28 top-20 h-1/12">
-            <div className="flex mx-[31.667px] px-8 pt-8 gap-16">
+        <div className="bg-[#FF884D] text-white p-28 top-10 h-1/12">
+            <div className="flex mx-[31.667px] px-8 pt-3.5 gap-16">
                 <div className="basis-2/4 ">
                     <h1 className="font-bold my-6 text-5xl text-left font-sans leading-tight">ASSESS ME</h1>
                     <h1 className="font-semibold my-6 text-4xl text-left font-sans leading-tight">

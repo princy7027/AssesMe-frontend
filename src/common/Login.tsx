@@ -63,7 +63,7 @@ const Login = () => {
 
         if (decodedToken?.role === "student") {
           setToken(response.data.token);
-          navigate("/std-dashboard");
+          navigate("/std-exam");
         }
         if (decodedToken?.role === "admin") {
           navigate("/admin-dashboard");

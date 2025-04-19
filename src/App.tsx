@@ -9,10 +9,16 @@ import CDashboard from './pages/creator/CDashboard'
 import AdminRoutes from './routers/AdminRoutes'
 import StudentRoutes from './routers/StudentRoutes'
 import SDashboard from './pages/student/SDashboard'
-import ADashboard from './pages/creator/Exam/admin/ADashboard'
+import ADashboard from './pages/admin/ADashboard'
 import CExam from '@/pages/creator/Exam/CExam'
 import SDiscussion from './pages/student/SDiscussion'
 import SResult from './pages/student/SResult'
+import SGivenExam from './pages/student/SGivenExam'
+import SExam from './pages/student/exam/SExam'
+import GiveExam from './pages/student/exam/GiveExam'
+import CDiscussion from './pages/creator/CDiscussion'
+import ViewExam from './pages/creator/ViewExam'
+import CLeaderBoard from './pages/creator/CLeaderBoard'
 
 function App() {
 
@@ -27,9 +33,16 @@ function App() {
         {/* <Route path='/admin-dashboard' element={<ADashboard/>}/> */}
         <Route path='/creator-dashboard' element={<CreatorRoutes component={CDashboard} />}/>
         <Route path='/creator-exam' element={<CreatorRoutes component={CExam} />}/>
-        <Route path='/std-dashboard' element={<StudentRoutes component={SDashboard} />}/>
-        <Route path='/std-discussion' element={<StudentRoutes component={SDiscussion} />}/>
-        <Route path='/std-result' element={<StudentRoutes component={SResult} />}/>
+        <Route path='/creator-viewexam' element={<CreatorRoutes component={ViewExam} />}/>
+        <Route path='/creator-discussion/:examId' element={<CreatorRoutes component={CDiscussion} />}/>
+        <Route path='/creator-leaderboard/:examId' element={<CreatorRoutes component={CLeaderBoard} />}/>
+
+        {/* <Route path='/std-dashboard' element={<StudentRoutes component={SDashboard} />}/> */}
+        <Route path='/std-exam' element={<StudentRoutes component={SExam} />}/>
+        <Route path='/giveExam/:examId' element={<StudentRoutes component={GiveExam} />}/>
+        <Route path='/std-givenexam' element={<StudentRoutes component={SGivenExam} />}/>
+        <Route path='/std-discussion/:examId' element={<StudentRoutes component={SDiscussion} />}/>
+        <Route path='/std-result/:examId/:userId' element={<StudentRoutes component={SResult} />}/>
       </Routes>
     </BrowserRouter>
   )

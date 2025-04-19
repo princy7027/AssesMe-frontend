@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { FiTrash } from "react-icons/fi";
-
-const SDiscussion = () => {
+const CDiscussion = () => {
   const { examId } = useParams();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -65,18 +64,17 @@ const SDiscussion = () => {
     }
   };
 
-
   const handleDelete = async (messageId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this message?");
     if (!confirmDelete) return;
-  
+
     try {
       const response = await axios.delete(`http://localhost:3000/discussion/${messageId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (response.data.success) {
         fetchDiscussions(); // Refresh list
       } else {
@@ -86,7 +84,7 @@ const SDiscussion = () => {
       console.error("Error deleting message:", error);
     }
   };
-  
+
   return (
     <div className="relative p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto pb-32">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Discussion for Exam</h2>
@@ -99,22 +97,24 @@ const SDiscussion = () => {
 
         <div className="space-y-4">
           {messages.map((item, index) => (
-            <div key={index} className="flex items-start space-x-3">
+            <div key={index} className="flex items-start space-x-3 group relative">
               <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0"></div>
               <div>
-                <p className="text-sm text-gray-500">{item?.studentId?.name || "Unknown"}</p>
-                <p className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mt-1">{item.text}</p>
+                <p className="text-sm text-gray-500">{item.studentId?.name || "Unknown"}</p>
+                <p className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mt-1 max-w-xl">{item.text}</p>
               </div>
+
               {/* Delete icon shown only if current user is message owner */}
-              {item?.studentId?._id === userId && (
-                <button
-                  onClick={() => handleDelete(item._id)}
-                  className="absolute right-2 top-0 text-red-500 hover:text-red-700"
-                  title="Delete message"
-                >
-                  <FiTrash />
-                </button>
-              )}
+              {/* {item.studentId?._id === userId && ( */}
+              <button
+                onClick={() => handleDelete(item._id)}
+                className="absolute right-2 top-0 p-2 bg-gray-300 rounded-full text-red-500 hover:text-white hover:bg-red-500 transition duration-200"
+                title="Delete message"
+              >
+                <FiTrash size={18} />
+              </button>
+
+              {/* )} */}
             </div>
           ))}
         </div>
@@ -143,4 +143,4 @@ const SDiscussion = () => {
   );
 };
 
-export default SDiscussion;
+export default CDiscussion;

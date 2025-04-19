@@ -42,9 +42,9 @@ const SResult = () => {
   if (!studentInfo) return <div className="text-center mt-20">Loading...</div>;
 
   return (
-    <div className="p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto text-[#3d3d3d] font-sans">
+    <div className="ml-[230px] p-6 max-w-[calc(100vw-230px)] bg-[#f8f9fc] min-h-screen overflow-y-auto overflow-x-hidden text-[#3d3d3d] font-sans">
       {/* Top Section */}
-      <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-md">
+      <div className="bg-blue-50 rounded-xl p-6 flex items-center justify-between shadow-md">
         <div className="flex items-center space-x-4">
           <img src={SDashboard} alt="Avatar" className="w-32 h-32 rounded-full" />
           <div className="ml-4">
@@ -59,34 +59,37 @@ const SResult = () => {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-6 mt-6">
-        <div className="flex items-center justify-between bg-yellow-400 text-black rounded-xl px-6 py-4 shadow-md">
+        <div className="flex items-center justify-between bg-white text-black rounded-xl px-6 py-4 shadow-md">
           <div>
-            <p className="text-sm font-medium">Highest Marks</p>
-            <h2 className="text-xl font-bold">{studentInfo.highestMarks}</h2>
+            <p className="text-sm font-medium">Highest Marks: {studentInfo.highestMarks}</p>
+            {/* <h2 className="text-xl font-bold">{studentInfo.highestMarks}</h2> */}
             <p className="text-sm mt-1">Lowest Marks: {studentInfo.lowestMarks}</p>
           </div>
-          <Wallet className="w-6 h-6 text-purple-700" />
+          {/* <Wallet className="w-6 h-6 text-purple-700" /> */}
         </div>
 
         <div className="flex items-center justify-between bg-white rounded-xl px-6 py-4 shadow-md">
           <div>
-            <p className="text-sm font-medium text-gray-700">Obtained Marks</p>
-            <h2 className="text-xl font-bold text-gray-900">{studentInfo.obtainedMarks}</h2>
+            <p className="text-sm font-medium text-gray-700">Obtained Marks: {studentInfo.obtainedMarks}</p>
+            {/* <h2 className="text-xl font-bold text-gray-900">{studentInfo.obtainedMarks}</h2> */}
             <p className="text-sm mt-1 text-gray-600">Percentage: {studentInfo.percentage}%</p>
           </div>
-          <CreditCard className="w-6 h-6 text-purple-400" />
+          {/* <CreditCard className="w-6 h-6 text-purple-400" /> */}
         </div>
 
         <div className="flex items-center justify-between bg-white rounded-xl px-6 py-4 shadow-md">
           <div>
             <p className="text-sm font-medium text-gray-700">Pass</p>
-            <h2 className="text-xl font-bold text-gray-900">{studentInfo.passStatus ? "Yes" : "No"}</h2>
+            <h2 className={`text-xl font-bold ${studentInfo.passStatus ? "text-green-600" : "text-red-600"}`}>
+              {studentInfo.passStatus ? "Yes" : "No"}
+            </h2>
           </div>
-          <Briefcase className="w-6 h-6 text-purple-400" />
+          {/* <Briefcase className="w-6 h-6 text-purple-400" /> */}
         </div>
       </div>
 
       {/* Strong & Weak Areas Summary */}
+
       <div className="grid grid-cols-2 gap-6 mt-6">
         <div className="flex items-center justify-between bg-white text-black rounded-xl px-6 py-4 shadow-md">
           <div>
@@ -127,10 +130,10 @@ const SResult = () => {
                   </div>
                 </div>
 
-                <a href="#" className="text-purple-500 text-sm flex items-center space-x-1 mt-3">
+                {/* <a href="#" className="text-purple-500 text-sm flex items-center space-x-1 mt-3">
                   <FiInfo />
                   <span>More information</span>
-                </a>
+                </a> */}
               </div>
             ))
           ) : (

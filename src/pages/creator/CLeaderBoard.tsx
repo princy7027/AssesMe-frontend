@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FiInfo } from "react-icons/fi";
-import { Briefcase, CreditCard, Wallet } from "lucide-react";
+import { useParams } from "react-router-dom";
 import CDashboard from "@/assets/Cdashboard.jpg";
-import { useParams } from "react-router-dom"; // to get examId from URL
 
 const CLeaderBoard = () => {
-  const { examId } = useParams(); // assuming route is something like /result/:examId
-  const [studentInfo, setStudentInfo] = useState(null);
+  const { examId } = useParams();
+  const [examData, setExamData] = useState(null);
   const token = sessionStorage.getItem("token");
+
   useEffect(() => {
     const fetchResultData = async () => {
       try {
@@ -17,27 +16,7 @@ const CLeaderBoard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("res", res.data);
-
-        const data = res.data.data;
-
-        // You can optionally find the current logged-in student here if needed.
-        const currentStudent = data.studentPerformance[0]; // or based on token/user context
-
-        // setStudentInfo({
-        //   name: currentStudent.studentName,
-        //   obtainedMarks: currentStudent.marks,
-        //   percentage: currentStudent.percentage,
-        //   passStatus: currentStudent.status === "PASSED",
-        //   subject: data.examDetails.subject,
-        //   totalMarks: data.examDetails.totalMarks,
-        //   passingMarks: data.examDetails.passingMarks,
-        //   totalQuestions: data.examDetails.numberOfQuestions,
-        //   highestMarks: data.resultsSummary.highestMarks,
-        //   lowestMarks: data.resultsSummary.lowestMarks,
-        //   strongAreas: [], // Populate if available from API
-        //   weakAreasSummary: [], // Populate if available from API
-        // });
+        setExamData(res.data.data);
       } catch (error) {
         console.error("Failed to fetch result:", error);
       }
@@ -45,117 +24,100 @@ const CLeaderBoard = () => {
 
     fetchResultData();
   }, [examId]);
+
+  if (!examData) return <p className="ml-[230px] p-6">Loading...</p>;
+
+  const { examDetails, resultsSummary, studentPerformance } = examData;
+  const formatDate = (isoDate) => new Date(isoDate).toLocaleDateString("en-GB");
+
   return (
     <div className="p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto text-[#3d3d3d] font-sans">
-      {/* Top Section */}
-      <div>
-        sectiononly
-      </div>
-      {/* <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-md">
-        <div className="flex items-center space-x-4">
-          <img src={CDashboard} alt="Avatar" className="w-32 h-32 rounded-full" />
-          <div className="ml-4">
-            <h2 className="text-xl font-semibold">Hi {studentInfo.name}</h2>
-            <p className="text-gray-500">Subject: {studentInfo.subject}</p>
-            <p className="text-gray-500">Total Marks: {studentInfo.totalMarks}</p>
-            <p className="text-gray-500">Passing Marks: {studentInfo.passingMarks}</p>
-            <p className="text-gray-500">Total Questions: {studentInfo.totalQuestions}</p>
+      <div className="bg-white rounded-2xl p-6 flex items-center justify-between shadow-lg">
+        <div className="flex items-center space-x-6">
+          <img src={CDashboard} alt="Avatar" className="w-2xs h-48 rounded-full  border-blue-300 shadow-md" />
+          <div className="ml-6">
+            <h2 className="text-2xl font-bold text-[#FF884D]">{examDetails.examName}</h2>
+            <p className="text-gray-600 mt-1">
+              📘 Subject: <span className="font-medium">{examDetails.subject}</span>
+            </p>
+            <p className="text-gray-600">📅 Start: {formatDate(examDetails.startDate)}</p>
+            <p className="text-gray-600">📅 End: {formatDate(examDetails.endDate)}</p>
           </div>
         </div>
-      </div> */}
-
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-6 mt-6">
-        {/* Highest / Lowest Marks */}
-        {/* <div className="flex items-center justify-between bg-yellow-400 text-black rounded-xl px-6 py-4 shadow-md">
-          <div>
-            <p className="text-sm font-medium">Highest Marks</p>
-            <h2 className="text-xl font-bold">{studentInfo.highestMarks}</h2>
-            <p className="text-sm mt-1">Lowest Marks: {studentInfo.lowestMarks}</p>
-          </div>
-          <Wallet className="w-6 h-6 text-purple-700" />
-        </div> */}
-
-        {/* Obtained Marks / Percentage */}
-        {/* <div className="flex items-center justify-between bg-white rounded-xl px-6 py-4 shadow-md">
-          <div>
-            <p className="text-sm font-medium text-gray-700">Obtained Marks</p>
-            <h2 className="text-xl font-bold text-gray-900">{studentInfo.obtainedMarks}</h2>
-            <p className="text-sm mt-1 text-gray-600">Percentage: {studentInfo.percentage}%</p>
-          </div>
-          <CreditCard className="w-6 h-6 text-purple-400" />
-        </div> */}
-
-        {/* Pass Status */}
-        {/* <div className="flex items-center justify-between bg-white rounded-xl px-6 py-4 shadow-md">
-          <div>
-            <p className="text-sm font-medium text-gray-700">Pass</p>
-            <h2 className="text-xl font-bold text-gray-900">{studentInfo.passStatus ? "Yes" : "No"}</h2>
-          </div>
-          <Briefcase className="w-6 h-6 text-purple-400" />
-        </div> */}
       </div>
 
-      {/* Areas - Strong and Weak */}
-      <div className="grid grid-cols-2 gap-6 mt-6">
-        {/* Strong Areas */}
-        {/* <div className="flex items-center justify-between bg-white text-black rounded-xl px-6 py-4 shadow-md">
-          <div>
-            <p className="text-sm font-medium">Strong Areas</p>
-            <h2 className="text-xl font-bold">{studentInfo.strongAreas?.join(", ") || "N/A"}</h2>
-          </div>
-        </div> */}
-
-        {/* Weak Areas Summary */}
-        {/* <div className="flex items-center justify-between bg-white rounded-xl px-6 py-4 shadow-md">
-          <div>
-            <p className="text-sm font-medium text-gray-700">Weak Areas</p>
-            <h2 className="text-xl font-bold text-gray-900">{studentInfo.weakAreasSummary?.join(", ") || "N/A"}</h2>
-          </div>
-        </div> */}
-      </div>
-
-      {/* Detailed Weak Areas List */}
-      {/* <div className="mt-10 bg-white rounded-xl p-6 shadow-md">
-  <div className="flex justify-between items-center mb-4">
-    <h3 className="text-lg font-semibold text-gray-800">Weak Areas</h3>
-  </div>
-
-  <div className="space-y-4">
-    {weakAreas?.length > 0 ? (
-      weakAreas.map((area) => (
-        <div key={area._id} className="border border-gray-200 rounded-lg p-4">
-          <p className="text-sm text-gray-500 mb-1">
-            Q{area.questionNumber}.{" "}
-            <span className="font-medium text-gray-700">{area.questionTopic}</span>
+      <div className="grid grid-cols-3 gap-6 mt-8">
+        <div className="bg-gradient-to-r from-blue-100 to-blue-50 text-black rounded-xl px-6 py-5 shadow-md">
+          <p className="text-sm font-semibold">
+            Total Marks : <span className="text-lg font-bold">{" " + examDetails.totalMarks}</span>
           </p>
-
-          <p className="text-base font-semibold text-gray-800 mb-2">
-            {area.questionText}
-          </p>
-
-          <div className="space-y-1 text-sm">
-            <div className="bg-red-50 p-2 rounded-md border-l-4 border-red-400">
-              <span className="font-semibold text-red-600">Your Answer:</span>{" "}
-              {area.userAnswer}
-            </div>
-            <div className="bg-green-50 p-2 rounded-md border-l-4 border-green-500">
-              <span className="font-semibold text-green-700">Correct Answer:</span>{" "}
-              {area.correctAnswer}
-            </div>
-          </div>
-
-          <a href="#" className="text-purple-500 text-sm flex items-center space-x-1 mt-3">
-            <FiInfo />
-            <span>More information</span>
-          </a>
+          <p className="text-sm text-gray-600 mt-1">Questions : {examDetails.numberOfQuestions}</p>
         </div>
-      ))
-    ) : (
-      <p className="text-gray-500">No weak areas found.</p>
-    )}
-  </div>
-</div> */}
+
+        <div className="bg-gradient-to-r from-green-100 to-green-50 text-black rounded-xl px-6 py-5 shadow-md">
+          <p className="text-sm font-semibold">Passing Marks</p>
+          <p className="text-lg font-bold">{examDetails.passingMarks}</p>
+        </div>
+
+        <div className="bg-gradient-to-r from-purple-100 to-purple-50 text-black rounded-xl px-6 py-5 shadow-md">
+          <p className="text-sm font-semibold">Total Students</p>
+          <p className="text-lg font-bold">{resultsSummary.totalStudents}</p>
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h3 className="text-xl font-bold mb-4 text-[#FF884D]">📊 Student Performance</h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden text-sm">
+            <thead className="bg-blue-100 text-[#FF884D]">
+              <tr className="text-left">
+                <th className="px-6 py-3">Name</th>
+                <th className="px-6 py-3">Status</th>
+                <th className="px-6 py-3">Attempted</th>
+                <th className="px-6 py-3">Correct</th>
+                <th className="px-6 py-3">Wrong</th>
+                <th className="px-6 py-3">Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {studentPerformance.map((student, idx) => {
+                const attempted = student.totalAttempted;
+                const correct = student.correctAnswers;
+                const wrong = student.wrongAnswers;
+                const isPassed = student.isPassed;
+
+                return (
+                  <tr
+                    key={idx}
+                    className={`border-t border-gray-200 ${
+                      idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    } hover:bg-gray-100 transition`}
+                  >
+                    <td className="px-6 py-3 font-medium">{student.studentName}</td>
+                    <td className="px-6 py-3">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          isPassed ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {isPassed ? "PASSED" : "FAILED"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3">{attempted}</td>
+                    <td className="px-6 py-3">{correct}</td>
+                    <td className="px-6 py-3">{wrong}</td>
+                    <td className="px-6 py-3">
+                      <span className="bg-blue-100 text-[#FF884D] px-3 py-1 rounded-full font-semibold">
+                        {isNaN(student.percentage) ? "0%" : `${student.percentage}%`}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

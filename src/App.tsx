@@ -19,6 +19,7 @@ import GiveExam from './pages/student/exam/GiveExam'
 import CDiscussion from './pages/creator/CDiscussion'
 import ViewExam from './pages/creator/ViewExam'
 import CLeaderBoard from './pages/creator/CLeaderBoard'
+import AllResult from './pages/student/AllResult'
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
         <Route path='/std-givenexam' element={<StudentRoutes component={SGivenExam} />}/>
         <Route path='/std-discussion/:examId' element={<StudentRoutes component={SDiscussion} />}/>
         <Route path='/std-result/:examId/:userId' element={<StudentRoutes component={SResult} />}/>
+        <Route path='/std-allresult' element={<StudentRoutes component={AllResult} />}/>
       </Routes>
     </BrowserRouter>
   )

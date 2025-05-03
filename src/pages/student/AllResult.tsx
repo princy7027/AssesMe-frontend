@@ -5,8 +5,8 @@ import { MessageCircle, FileText } from "lucide-react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const StudentExamList = () => {
-  const [examList, setExamList] = useState([]);
+const AllResult = () => {
+    const [examList, setExamList] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -38,10 +38,6 @@ const StudentExamList = () => {
 
     if (userId) fetchExams(); 
   }, [userId, token]);
-
-  const handleDiscussionNavigate = (examId) => {
-    navigate(`/std-discussion/${examId}`);
-  };
 
   return (
     <div className="p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto">
@@ -96,10 +92,10 @@ const StudentExamList = () => {
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        onClick={() => handleDiscussionNavigate(exam.examDetails.examId)}
+                        // onClick={() => handleResultNavigate(exam.examDetails.examId)}
                         className="flex items-center gap-2 bg-[#FF884D] text-white hover:bg-[#e67a45]"
                       >
-                        <MessageCircle className="w-4 h-4" /> Discussion
+                        <MessageCircle className="w-4 h-4" /> Result
                       </Button>
                     </div>
                   </div>
@@ -110,7 +106,7 @@ const StudentExamList = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StudentExamList;
+export default AllResult

@@ -20,7 +20,11 @@ const CExam = () => {
   const [questionCount, setQuestionCount] = useState(0);
   const [allQuestions, setAllQuestions] = useState([]);
   const maxQuestions = parseInt(sessionStorage.getItem("maxQuestions") || "0");
+  // const [numberOfQuestions, setNumberOfQuestions] = useState(5); // Default value for the number of questions
+  const [questions, setQuestions] = useState([]);
 
+  const examId = sessionStorage.getItem("id");
+  const examName = sessionStorage.getItem("examName");
   const token = sessionStorage.getItem("token");
 
   const handleOptionChange = (index, value) => {
@@ -39,10 +43,11 @@ const CExam = () => {
       });
 
       if (response?.data?.success) {
-        console.log("Success:", response.data);
-        console.log("numberOfQuestions:", response.data.data.numberOfQuestions);
+        // console.log("Success:", response.data);
+        // console.log("numberOfQuestions:", response.data.data.numberOfQuestions);
         sessionStorage.setItem("maxQuestions", response.data.data.numberOfQuestions);
         sessionStorage.setItem("id", response.data.data._id);
+        sessionStorage.setItem("examName", response.data.data.examName);
         setStep(3);
       } else {
         console.warn("Submission failed:", response.data?.message);
@@ -91,9 +96,31 @@ const CExam = () => {
     setTopicName("");
   };
 
-  const handleSaveAll = async () => {
-    const examId = sessionStorage.getItem("id");
+  const handleGenerateQuestions = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/ai-question/generate-ai`,
+        {
+          examId: examId,
+          numberOfQuestions: maxQuestions,
+          topic: examName,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
+      console.log("Response:", response.data);
+      setQuestions(response.data.data); // Set the response data to the questions state
+    } catch (error) {
+      console.error("Error generating questions:", error);
+    }
+  };
+
+  const handleSaveAll = async () => {
     const payload = {
       examId,
       questionData: allQuestions,
@@ -137,7 +164,7 @@ const CExam = () => {
               <p className="text-xl text-gray-500 font-bold">Generate question manually</p>
             </div>
 
-            <div
+            {/* <div
               onClick={() => {
                 setSelectedChoice("file");
                 setStep(2);
@@ -148,7 +175,7 @@ const CExam = () => {
                 <FiUpload className="text-orange-500 text-2xl" />{" "}
               </div>
               <p className="text-xl text-gray-500 font-bold">Generate through file</p>
-            </div>
+            </div> */}
             <div
               onClick={() => {
                 setSelectedChoice("ai");
@@ -293,50 +320,6 @@ const CExam = () => {
           </div>
         )}
 
-        {step === 3 && selectedChoice === "file" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            {/* Left - File Upload UI */}
-            <div className="bg-gray-100 border border-dashed border-gray-300 rounded-xl p-6 space-y-4 shadow-md flex flex-col items-center justify-center text-center">
-              <div className="text-lg font-medium text-gray-700">Upload questions via a file</div>
-              <p className="text-sm text-muted-foreground">
-                Drag & drop files here or select a file to upload questions in bulk
-                <br />
-                <span className="text-xs">
-                  Supports Word(.docx)/Excel(.xlsx) files, and Word files can be imported with pictures, audio/video,
-                  formulas, etc.
-                </span>
-              </p>
-              <button className="bg-orange-500 text-white px-4 py-2 rounded-md">Upload file</button>
-            </div>
-
-            {/* Right - Question Preview */}
-            <div className="bg-white border rounded-xl p-6 shadow-md space-y-4">
-              <div className="text-sm text-muted-foreground border-b pb-2">
-                <strong>Generate preview area</strong> – Due to the limitation of AI model, some test questions may not
-                be recognized. Please check whether the recognized test questions are correct.
-              </div>
-
-              <div className="space-y-2 text-gray-700">
-                <p className="font-semibold">
-                  1. MCQ Choice: Based on the information in the question, select the correct answer. (1PT)
-                </p>
-                <p className="text-sm text-gray-700">
-                  Children of the family member is at least a Humpty and a Dumpty. The input file will be given in the
-                  format: &lt;member name, ID&gt; &lt;age&gt; &lt;child member name, ID&gt;
-                </p>
-
-                <div className="space-y-2 mt-4">
-                  {["Option 1", "Option 2", "Option 3", "Option 4"].map((option, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <input type="radio" name="file-option" className="accent-orange-500" />
-                      <label className="text-sm">{option}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
         {step === 3 && selectedChoice === "ai" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             {/* Left side - Prompt input */}
@@ -347,37 +330,63 @@ const CExam = () => {
                 can generate questions based on keywords and descriptions in up to 30 most spoken languages in the
                 world.
                 <br />
-                <span className="italic">Ex: "generate 10 question of TOPIC"</span>
+                <span className="italic">Ex: "Topic : Networking Question : 5"</span>
               </p>
-              <Input placeholder="Enter prompt" className="mt-2 text-black" />
-              <button className="bg-orange-500 text-white px-4 py-2 rounded-md w-full">Generate question</button>
+              <div className="flex flex-col">
+                {" "}
+                {/* Change flex-row to flex-col */}
+                <input
+                  type="text"
+                  value={examName}
+                  disabled
+                  className="border rounded-lg px-4 py-2 mt-2 text-black"
+                />
+                <input
+                  type="number"
+                  value={maxQuestions} // Set value to maxQuestions from sessionStorage
+                  disabled
+                  className="border rounded-lg px-4 py-2 mt-2 text-black bg-gray-200 cursor-not-allowed"
+                />
+              </div>
+
+              <button
+                onClick={handleGenerateQuestions}
+                className="bg-orange-500 text-white px-4 py-2 rounded-md w-full"
+              >
+                Generate question
+              </button>
             </div>
 
             {/* Right side - Preview area */}
             <div className="bg-white border rounded-xl p-6 shadow-md space-y-4">
               <div className="text-sm text-muted-foreground border-b pb-2">
-                <strong>Generate preview area</strong> – Due to the limitation of AI model, some test questions may not
-                be recognized. Please check whether the recognized test questions are correct.
+                <strong>Generate preview area</strong> – Due to the limitation of the AI model, some test questions may
+                not be recognized. Please check whether the recognized test questions are correct.
               </div>
 
-              <div className="space-y-2 text-gray-700">
-                <p className="font-semibold">
-                  1. Multiple Choice: Based on the information in the question, select the correct answer. (1PT)
-                </p>
-                <p className="text-sm text-gray-700">
-                  Children of the family member is at least a Humpty and a Dumpty. The input file will be given in the
-                  format: &lt;member name, ID&gt; &lt;age&gt; &lt;child member name, ID&gt;
-                </p>
-
-                <div className="space-y-2 mt-4">
-                  {["Option 1", "Option 2", "Option 3", "Option 4"].map((option, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <input type="radio" name="ai-option" className="accent-orange-500" />
-                      <label className="text-sm">{option}</label>
+              {questions && questions.length > 0 ? (
+                questions.map((q, index) => (
+                  <div key={q._id} className="space-y-2 text-gray-700">
+                    <p className="font-semibold">
+                      {q.questionNumber}. {q.queType === "MCQ" ? "Multiple Choice" : q.queType}: {q.questionText} (
+                      {q.questionTopic})
+                    </p>
+                    <div className="space-y-2 mt-4">
+                      {q.options.map((option, optIndex) => (
+                        <div key={optIndex} className="flex items-center gap-2">
+                          <input type="radio" name={`question-${q._id}`} className="accent-orange-500" />
+                          <label className="text-sm">{option}</label>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <div className="mt-4 text-sm text-green-600">
+                      <strong>Correct Answer:</strong> {q.correctAnswer}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No questions available. Please generate questions first.</p>
+              )}
             </div>
           </div>
         )}

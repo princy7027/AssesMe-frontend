@@ -46,7 +46,7 @@ const SResult = () => {
       {/* Top Section */}
       <div className="bg-blue-50 rounded-xl p-6 flex items-center justify-between shadow-md">
         <div className="flex items-center space-x-4">
-          <img src={SDashboard} alt="Avatar" className="w-32 h-32 rounded-full" />
+          <img src={SDashboard} alt="Avatar" className="w-2xs h-48 rounded-full" />
           <div className="ml-4">
             <h2 className="text-xl font-semibold">Hi {studentInfo.name}</h2>
             <p className="text-gray-500">Subject: {studentInfo.subject}</p>

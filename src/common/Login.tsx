@@ -24,6 +24,7 @@ const Login = () => {
   const { setToken } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<string>("student");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,6 +48,7 @@ const Login = () => {
         {
           email: data.email,
           password: data.password,
+          role: selectedRole, 
         },
         {
           headers: {
@@ -88,7 +90,7 @@ const Login = () => {
           <div className="flex flex-col gap-4 ">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <div className="gap-4 py-4 md:grid-cols-1 lg:grid-cols-1 sm:grid-cols-1 grid grid-cols-1">
+                <div className="py-4 ">
                   <FormField
                     control={form.control}
                     name="email"
@@ -112,7 +114,7 @@ const Login = () => {
                     control={form.control}
                     name="password"
                     render={({ field }) => (
-                      <FormItem className="grid w-full items-center gap-4">
+                      <FormItem className="grid w-full items-center gap-4 mt-2">
                         <div className="relative col-span-3">
                           <FormControl>
                             <Input
@@ -134,6 +136,20 @@ const Login = () => {
                       </FormItem>
                     )}
                   />
+                  
+                  {/* Role selection dropdown */}
+                  <div className="col-span-3 mt-2 border">
+        
+                    <select
+                      id="role-select"
+                      value={selectedRole}
+                      onChange={(e) => setSelectedRole(e.target.value)}
+                      className=" border text-black text-sm rounded-[10px] focus:outline-[#404042] block w-full p-2.5"
+                    >
+                      <option value="student">Student</option>
+                      <option value="creator">Creator</option>
+                    </select>
+                  </div>
                 </div>
                 <Button
                   type="submit"
@@ -144,13 +160,13 @@ const Login = () => {
                 </Button>
               </form>
             </Form>
-            <div className="flex items-center space-x-2 justify-end p-3 ">
+            {/* <div className="flex items-center space-x-2 justify-end p-3 ">
               <span className=" font-bold ">
                 <Button onClick={() => navigate("/verify")} className="bg-transparent text-black hover:bg-transparent">
                   Forgot password ?
                 </Button>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="w-full lg:w-1/2 md:w-1/2 hidden lg:flex justify-center items-center p-5 rounded-2xl h-[95vh] fixed right-5">

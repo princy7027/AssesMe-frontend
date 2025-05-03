@@ -6,11 +6,7 @@ import { formSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-// import { usePostLoginMutation } from "@/store/services/Login.service";
-// import { useAuth } from "@/Context/ContextToken";
-// import { useToast } from "@/components/ui/use-toast";
 import image from "../assets/signInlogo.png";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -146,6 +142,7 @@ const Login = () => {
                       onChange={(e) => setSelectedRole(e.target.value)}
                       className=" border text-black text-sm rounded-[10px] focus:outline-[#404042] block w-full p-2.5"
                     >
+                      <option value="student">Admin</option>
                       <option value="student">Student</option>
                       <option value="creator">Creator</option>
                     </select>

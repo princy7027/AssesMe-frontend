@@ -25,7 +25,7 @@ const AllResult = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("data", response.data);
+        // console.log("data", response.data);
 
         const exams = response.data?.data?.examResults || [];
         setExamList(exams);
@@ -38,7 +38,9 @@ const AllResult = () => {
 
     if (userId) fetchExams(); 
   }, [userId, token]);
-
+  const handleResultNavigate = (examId) => {
+    navigate(`/std-result-all/${userId}/${examId}`);
+  };
   return (
     <div className="p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto">
       <div className="p-3.5">
@@ -92,8 +94,8 @@ const AllResult = () => {
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        // onClick={() => handleResultNavigate(exam.examDetails.examId)}
-                        className="flex items-center gap-2 bg-[#FF884D] text-white hover:bg-[#e67a45]"
+                        onClick={() => handleResultNavigate(exam.examDetails.examId)}
+                        className="flex items-center gap-2 bg-[#FF884D] text-white hover:text-white hover:bg-[#e67a45]"
                       >
                         <MessageCircle className="w-4 h-4" /> Result
                       </Button>

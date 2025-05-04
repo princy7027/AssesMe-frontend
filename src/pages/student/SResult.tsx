@@ -12,7 +12,6 @@ const SResult = () => {
   const name = decodedToken?.name;
 
   useEffect(() => {
-    // Get data from local storage
     const raw = localStorage.getItem("resultData");
     const parsed = raw ? JSON.parse(raw) : null;
 

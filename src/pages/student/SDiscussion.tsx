@@ -80,7 +80,7 @@ const SDiscussion = () => {
       });
   
       if (response.data.success) {
-        fetchDiscussions(); // Refresh list
+        fetchDiscussions(); 
       } else {
         console.error("Failed to delete message:", response.data.message);
       }

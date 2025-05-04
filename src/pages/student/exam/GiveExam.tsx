@@ -120,7 +120,6 @@ const GiveExam = () => {
         </button>
       </div>
 
-      {/* Question Area */}
       <div className="flex-grow p-8 bg-[#f9fafc] min-h-screen">
         {questions.length > 0 && (
           <div className="bg-white p-6 rounded-xl shadow-lg max-w-4xl mx-auto">

@@ -102,7 +102,6 @@ const ADashboard = () => {
             </tbody>
           </table>
 
-          {/* Delete Confirmation Popup */}
           <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
             <DialogContent className="bg-white shadow-lg text-black">
               <DialogHeader>
@@ -127,7 +126,6 @@ const ADashboard = () => {
             </DialogContent>
           </Dialog>
 
-          {/* View Creator Popup */}
           <Dialog open={showViewDialog} onOpenChange={setShowViewDialog}>
             <DialogContent className="bg-white shadow-lg">
               <DialogHeader>

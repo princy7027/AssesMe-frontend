@@ -12,7 +12,6 @@ const AllResult = () => {
 
   const token = sessionStorage.getItem("token");
 
-  // 👇 Decode token to get user ID
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = decodedToken?._id;
 

@@ -28,20 +28,20 @@ const SResult_all = () => {
         const marksPerQuestion = examDetails.totalMarks / examDetails.numberOfQuestions;
         const correctQuestions = resultDetails.obtainedMarks / marksPerQuestion;
         const wrongQuestions = examDetails.numberOfQuestions - correctQuestions;
-        
+
         setStudentInfo({
           name: decodedToken?.name || "Student", // from token
           subject: examDetails.subject,
           totalMarks: examDetails.totalMarks,
           passingMarks: examDetails.passingMarks,
           totalQuestions: examDetails.numberOfQuestions,
-          obtainedMarks: resultDetails.obtainedMarks,
-          percentage: resultDetails.percentage,
+          obtainedMarks: Number(resultDetails.obtainedMarks),
+          percentage: Number(resultDetails.percentage),
           passStatus: resultDetails.isPassed,
           strongAreas: resultDetails.strongAreas.map((area) => area.questionTopic),
           weakAreasSummary: resultDetails.weakAreas.map((area) => area.questionTopic),
           correctQuestions: correctQuestions,
-  wrongQuestions: wrongQuestions,
+          wrongQuestions: wrongQuestions,
         });
 
         setWeakAreas(resultDetails.weakAreas || []);
@@ -82,8 +82,12 @@ const SResult_all = () => {
 
         <div className="flex items-center justify-between bg-white rounded-xl px-6 py-4 shadow-md">
           <div>
-            <p className="text-sm font-medium text-gray-700">Obtained Marks: {studentInfo?.obtainedMarks}</p>
-            <p className="text-sm mt-1 text-gray-600">Percentage: {studentInfo?.percentage}%</p>
+            <p className="text-sm font-medium text-gray-700">
+              Obtained Marks: {studentInfo ? Math.round(studentInfo.obtainedMarks) : ""}
+            </p>
+            <p className="text-sm mt-1 text-gray-600">
+              Percentage: {studentInfo ? studentInfo.percentage.toFixed(2) : ""}%
+            </p>
           </div>
         </div>
 

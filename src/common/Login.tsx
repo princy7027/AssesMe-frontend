@@ -13,7 +13,8 @@ import { FaEyeSlash } from "react-icons/fa6";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "@/context/ContextToken";
-
+import { toast } from 'sonner'
+import "../index.css"; 
 const Login = () => {
   //   const { toast } = useToast();
   const navigate = useNavigate();
@@ -74,6 +75,12 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
+      toast.error(
+        error?.response?.data?.message || "Something went wrong. Please try again.",
+        {
+          className: "text-red-500", // Tailwind class
+        }
+      );
     }
   };
   return (
@@ -101,7 +108,7 @@ const Login = () => {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 text-sm" />
                         </div>
                       </FormItem>
                     )}
@@ -128,7 +135,7 @@ const Login = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                           </Button>
                         </div>
-                        <FormMessage />
+                        <FormMessage className="text-red-500 text-sm" />
                       </FormItem>
                     )}
                   />

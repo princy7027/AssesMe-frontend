@@ -5,6 +5,7 @@ import { FiUpload } from "react-icons/fi";
 import { IoIosListBox } from "react-icons/io";
 import ExamForm from "./ExamForm";
 import axios from "axios";
+import { toast } from 'sonner'
 
 const CExam = () => {
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -20,7 +21,6 @@ const CExam = () => {
   const [questionCount, setQuestionCount] = useState(0);
   const [allQuestions, setAllQuestions] = useState([]);
   const maxQuestions = parseInt(sessionStorage.getItem("maxQuestions") || "0");
-  // const [numberOfQuestions, setNumberOfQuestions] = useState(5); // Default value for the number of questions
   const [questions, setQuestions] = useState([]);
 
   const examId = sessionStorage.getItem("id");
@@ -43,8 +43,7 @@ const CExam = () => {
       });
 
       if (response?.data?.success) {
-        // console.log("Success:", response.data);
-        // console.log("numberOfQuestions:", response.data.data.numberOfQuestions);
+      
         sessionStorage.setItem("maxQuestions", response.data.data.numberOfQuestions);
         sessionStorage.setItem("id", response.data.data._id);
         sessionStorage.setItem("examName", response.data.data.examName);
@@ -54,6 +53,7 @@ const CExam = () => {
       }
     } catch (error) {
       console.error("Submission error:", error);
+      toast.error(error?.response?.data?.message || "Something went wrong. Please try again.", );
     }
   };
 
@@ -335,12 +335,7 @@ const CExam = () => {
               <div className="flex flex-col">
                 {" "}
                 {/* Change flex-row to flex-col */}
-                <input
-                  type="text"
-                  value={examName}
-                  disabled
-                  className="border rounded-lg px-4 py-2 mt-2 text-black"
-                />
+                <input type="text" value={examName} disabled className="border rounded-lg px-4 py-2 mt-2 text-black" />
                 <input
                   type="number"
                   value={maxQuestions} // Set value to maxQuestions from sessionStorage

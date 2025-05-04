@@ -25,7 +25,6 @@ const AllResult = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log("data", response.data);
 
         const exams = response.data?.data?.examResults || [];
         setExamList(exams);
@@ -71,6 +70,7 @@ const AllResult = () => {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {examList.map((exam) => (
+              
               <div
                 key={exam.examDetails.examId}
                 className="bg-white shadow-sm rounded-lg overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-300"
@@ -83,12 +83,10 @@ const AllResult = () => {
                         <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
                           Subject: {exam.examDetails?.subject}
                         </span>
-                        {/* <span className="px-2 py-1 bg-[#ffeee5] text-[#FF884D] text-xs rounded-full">
-                          Score: {exam.score || "N/A"}
-                        </span> */}
+                    
                       </div>
                       <p className="text-sm text-gray-500">
-                        Completed on: {new Date(exam.resultDetails.submittedAt || Date.now()).toLocaleDateString()}
+                        Completed on: {new Date(exam.resultDetails?.submittedAt || Date.now()).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="flex gap-2">

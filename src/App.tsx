@@ -32,14 +32,13 @@ function App() {
         <Route path='/signup' element={<Register/>}/>
 
         <Route path='/admin-dashboard' element={<AdminRoutes component={ADashboard} />}/>
-        {/* <Route path='/admin-dashboard' element={<ADashboard/>}/> */}
+
         <Route path='/creator-dashboard' element={<CreatorRoutes component={CDashboard} />}/>
         <Route path='/creator-exam' element={<CreatorRoutes component={CExam} />}/>
         <Route path='/creator-viewexam' element={<CreatorRoutes component={ViewExam} />}/>
         <Route path='/creator-discussion/:examId' element={<CreatorRoutes component={CDiscussion} />}/>
         <Route path='/creator-leaderboard/:examId' element={<CreatorRoutes component={CLeaderBoard} />}/>
 
-        {/* <Route path='/std-dashboard' element={<StudentRoutes component={SDashboard} />}/> */}
         <Route path='/std-exam' element={<StudentRoutes component={SExam} />}/>
         <Route path='/giveExam/:examId' element={<StudentRoutes component={GiveExam} />}/>
         <Route path='/std-givenexam' element={<StudentRoutes component={SGivenExam} />}/>

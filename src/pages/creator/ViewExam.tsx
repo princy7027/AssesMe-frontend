@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom"; // Importing for navigation
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import { FileText, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,10 @@ const ViewExam = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Decoding the token to get the userId
   const token = sessionStorage.getItem("token");
   const decodedToken = jwtDecode(token);
   const userId = decodedToken._id;
 
-  // Fetch the exams using the userId
   const fetchExams = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/exam/user/${userId}`, {
@@ -25,8 +23,7 @@ const ViewExam = () => {
       });
       console.log("Fetched Exams Data:", response.data);
 
-      // Access the correct data
-      setExamList(response.data.data); // Here we're using `data` instead of `exams`
+      setExamList(response.data.data); 
       setLoading(false);
     } catch (error) {
       console.error("Error fetching exams:", error);
@@ -34,7 +31,6 @@ const ViewExam = () => {
     }
   };
 
-  // Navigate to the discussion page
   const handleDiscussionNavigate = (examId) => {
     navigate(`/creator-discussion/${examId}`);
   };
@@ -46,7 +42,7 @@ const ViewExam = () => {
     if (userId) {
       fetchExams();
     }
-  }, [userId]); // The effect will run when userId changes
+  }, [userId]); 
 
   return (
     <div className="w-[1300px] ml-[230px] p-6 bg-white border-r border-gray-200 min-h-screen flex flex-col">
@@ -60,7 +56,7 @@ const ViewExam = () => {
           <div className="space-y-4">
             {examList.map((exam) => (
               <div
-                key={exam._id} // Use the unique _id from the response
+                key={exam._id} 
                 className="flex items-center justify-between bg-white shadow rounded-lg p-4"
               >
                 <div>

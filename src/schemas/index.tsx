@@ -22,13 +22,13 @@ export const regiSchema = z.object({
 });
 
 export const examformSchema = z.object({
-  examName: z.string().min(1, "Exam name is required"),
-  subject: z.string().min(1, "Subject is required"),
+  examName: z.string().min(3, "Exam name is required"),
+  subject: z.string().min(3, "Subject is required"),
   startDate: z.date(),
   endDate: z.date(),
-  duration: z.number().min(1, "Duration must be at least 1"),
-  totalMarks: z.number().min(1, "Total marks must be at least 1"),
+  duration: z.number().min(10, "Duration must be at least 10"),
+  totalMarks: z.number().min(10, "Total marks must be at least 10"),
   numberOfQuestions: z.number().min(5, "Must be at least 5 question"),
   instructions: z.string().optional(),
-  passingMarks: z.number().min(1, "Passing marks must be at least 1"),
+  passingMarks: z.number().min(8, "Passing marks must be at least 1"),
 });

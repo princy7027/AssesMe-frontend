@@ -53,6 +53,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
+[data-sonner-toast][data-variant="destructive"] {
+  color: red;
+}
 
 * {
   @apply border-border;

@@ -14,7 +14,6 @@ const CDiscussion = () => {
   const name = decodedToken?.name;
   const examName=sessionStorage.getItem('examName');
 
-  // Fetch discussions
   const fetchDiscussions = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/discussion/${examId}`, {
@@ -34,7 +33,6 @@ const CDiscussion = () => {
     fetchDiscussions();
   }, [examId]);
 
-  // Send message handler
   const handleSend = async () => {
     if (!message.trim()) return;
 
@@ -55,8 +53,8 @@ const CDiscussion = () => {
       );
 
       if (response.data.success) {
-        setMessage(""); // Clear input
-        fetchDiscussions(); // Refresh discussions
+        setMessage("");
+        fetchDiscussions(); 
       } else {
         console.error("Failed to send message:", response.data.message);
       }
@@ -77,7 +75,7 @@ const CDiscussion = () => {
       });
 
       if (response.data.success) {
-        fetchDiscussions(); // Refresh list
+        fetchDiscussions(); 
       } else {
         console.error("Failed to delete message:", response.data.message);
       }
@@ -117,7 +115,6 @@ const CDiscussion = () => {
         </div>
       </div>
 
-      {/* Sticky input box */}
       <div className="fixed bottom-0 left-[230px] w-[1300px] bg-white px-6 py-4 border-t flex items-center space-x-2">
         <input
           type="text"
@@ -129,7 +126,8 @@ const CDiscussion = () => {
         <button
           onClick={handleSend}
           disabled={message.trim() === ""}
-          className={`px-4 py-2 rounded text-white ${
+          className={`px-4 py-2 rounded text-white 
+            ${
             message.trim() === "" ? "bg-gray-400 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600"
           }`}
         >

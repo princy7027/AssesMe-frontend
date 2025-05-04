@@ -24,7 +24,6 @@ const examformSchema = z.object({
 });
 
 export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof examformSchema>) => void }) {
-  const { formatDate } = DateFormat();
 
   const form = useForm<z.infer<typeof examformSchema>>({
     resolver: zodResolver(examformSchema),
@@ -56,7 +55,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                   <FormControl>
                     <Input placeholder="Exam Name" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -71,7 +70,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                   <FormControl>
                     <Input placeholder="Subject" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -113,7 +112,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -160,7 +159,6 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
               )}
             />
 
-            {/* Duration */}
             <FormField
               control={form.control}
               name="duration"
@@ -175,7 +173,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -195,7 +193,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -215,7 +213,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -235,7 +233,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                       onChange={(e) => field.onChange(+e.target.value)}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />
@@ -250,7 +248,7 @@ export default function ExamForm({ onSubmit }: { onSubmit: (data: z.infer<typeof
                   <FormControl>
                     <Input placeholder="Any notes or instructions..." {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage  className="text-rose-500 text-sm"/>
                 </FormItem>
               )}
             />

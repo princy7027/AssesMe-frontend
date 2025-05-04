@@ -10,6 +10,8 @@ import image from "@/assets/registerlogo.png";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'sonner'
+import "../index.css"; 
 import axios from "axios";
 
 const Register = () => {
@@ -51,6 +53,12 @@ const Register = () => {
       }
     } catch (error) {
       console.error("Error creating company:", error);
+      toast.error(
+        error?.response?.data?.message || "Something went wrong. Please try again.",
+        {
+          className: "text-red-500",
+        }
+      );
     }
   };
     return (
@@ -78,7 +86,7 @@ const Register = () => {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 text-sm" />
                         </div>
                       </FormItem>
                     )}
@@ -97,7 +105,7 @@ const Register = () => {
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 text-sm" />
                         </div>
                       </FormItem>
                     )}
@@ -124,7 +132,7 @@ const Register = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                           </Button>
                         </div>
-                        <FormMessage />
+                        <FormMessage className="text-red-500 text-sm" />
                       </FormItem>
                     )}
                   />

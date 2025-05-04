@@ -44,162 +44,179 @@ const CDashboard = () => {
   const currentItems = tableData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <motion.div 
+    <motion.div
       className="p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <motion.div 
+      <motion.div
         className="mt-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.8 }}
       >
-        <motion.h2 
+        <motion.h2
           className="text-xl md:text-2xl font-semibold mb-4 text-orange-500"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Hello <motion.span 
+          Hello{" "}
+          <motion.span
             className="font-bold"
-            animate={{ 
+            animate={{
               color: ["#FF884D", "#E57CD8", "#FF884D"],
-              scale: [1, 1.1, 1]
+              scale: [1, 1.1, 1],
             }}
-            transition={{ 
+            transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
-          >{name}</motion.span>, welcome to{" "}
-          <motion.span 
+          >
+            {name}
+          </motion.span>
+          , welcome to{" "}
+          <motion.span
             className="text-orange-500 font-bold"
             animate={{ scale: [1, 1.05, 1] }}
-            transition={{ 
+            transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
-          >AssessMe</motion.span>
+          >
+            AssessMe
+          </motion.span>
         </motion.h2>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <motion.div 
+          <motion.div
             className="bg-white rounded-xl shadow p-4 flex justify-between items-center"
-            whileHover={{ 
+            whileHover={{
               scale: 1.02,
               boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-              transition: { duration: 0.3 }
+              transition: { duration: 0.3 },
             }}
           >
             <div>
-              <motion.p 
+              <motion.p
                 className="text-sm text-gray-500"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-              >Active exam takers</motion.p>
-              <motion.h3 
+              >
+                Active exam takers
+              </motion.p>
+              <motion.h3
                 className="text-4xl font-bold text-[#6985f7]"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ 
+                transition={{
                   type: "spring",
                   stiffness: 200,
                   damping: 10,
-                  delay: 0.5
+                  delay: 0.5,
                 }}
-              >0</motion.h3>
+              >
+                0
+              </motion.h3>
             </div>
             <div>
-              <motion.p 
+              <motion.p
                 className="text-sm text-gray-500"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-              >Active exams</motion.p>
-              <motion.h3 
+              >
+                Active exams
+              </motion.p>
+              <motion.h3
                 className="text-4xl font-bold text-[#6985f7]"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ 
+                transition={{
                   type: "spring",
                   stiffness: 200,
                   damping: 10,
-                  delay: 0.6
+                  delay: 0.6,
                 }}
-              >1</motion.h3>
+              >
+                4
+              </motion.h3>
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="bg-white rounded-xl shadow p-4 flex justify-around h-[100px]"
-            whileHover={{ 
+            whileHover={{
               scale: 1.02,
               boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-              transition: { duration: 0.3 }
+              transition: { duration: 0.3 },
             }}
           >
             {[
               { label: "Exams", value: "1" },
               { label: "Questions", value: "0" },
-              { label: "Students", value: "0" }
+              { label: "Students", value: "0" },
             ].map((item, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
               >
-                <motion.p 
-                  className="text-sm text-gray-500"
-                  whileHover={{ scale: 1.1 }}
-                >{item.label}</motion.p>
-                <motion.h3 
+                <motion.p className="text-sm text-gray-500" whileHover={{ scale: 1.1 }}>
+                  {item.label}
+                </motion.p>
+                <motion.h3
                   className="text-4xl font-bold text-[#6985f7]"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     stiffness: 200,
                     damping: 10,
-                    delay: 0.7 + index * 0.1
+                    delay: 0.7 + index * 0.1,
                   }}
-                >{item.value}</motion.h3>
+                >
+                  {item.value}
+                </motion.h3>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-white text-black rounded-xl shadow p-4 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          whileHover={{ 
+          whileHover={{
             boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-            transition: { duration: 0.3 }
+            transition: { duration: 0.3 },
           }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-xl font-semibold mb-4"
-            animate={{ 
-              color: ["#422b72", "#6985f7", "#422b72"]
+            animate={{
+              color: ["#422b72", "#6985f7", "#422b72"],
             }}
-            transition={{ 
+            transition={{
               duration: 3,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
-          >Active exams</motion.h3>
+          >
+            Active exams
+          </motion.h3>
           <div className="overflow-hidden">
             <table className="w-full text-sm">
               <thead className="rounded-xl">
@@ -214,16 +231,16 @@ const CDashboard = () => {
               </thead>
               <tbody>
                 {currentItems.map((exam, index) => (
-                  <motion.tr 
-                    className="border-t" 
+                  <motion.tr
+                    className="border-t"
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 * index }}
-                    whileHover={{ 
+                    whileHover={{
                       backgroundColor: "#f8f9fc",
                       scale: 1.01,
-                      transition: { duration: 0.2 }
+                      transition: { duration: 0.2 },
                     }}
                   >
                     <td className="p-2">{exam.subject}</td>
@@ -248,52 +265,57 @@ const CDashboard = () => {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="mb-6 text-black"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-lg font-semibold mb-4"
-            animate={{ 
-              color: ["#422b72", "#6985f7", "#422b72"]
+            animate={{
+              color: ["#422b72", "#6985f7", "#422b72"],
             }}
-            transition={{ 
+            transition={{
               duration: 3,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
-          >Quick actions</motion.h3>
+          >
+            Quick actions
+          </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <ActionCard icon={<AiOutlinePlus className="text-blue-500 text-2xl"/>} title="Add new exam" onClick={()=>navigate("/creator-exam")}/>
-            <ActionCard icon={<FiUpload className="text-orange-500 text-2xl" />} title="Import questions" />
-            <ActionCard icon={<FaBrain className="text-blue-500" />} title="AI Generator" />
-            <ActionCard icon={<AiOutlineUserAdd className="text-blue-500 text-2xl" />} title="Add students" />
+            <ActionCard
+              icon={<AiOutlinePlus className="text-blue-500 text-2xl" />}
+              title="Add new exam"
+              onClick={() => navigate("/creator-exam")}
+            />
+            <ActionCard icon={<FaBrain className="text-blue-500" />} title="AI Generator" onClick={() => navigate("/creator-exam")}/>
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="mb-4 text-black"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-sm text-gray-500 mb-2"
-            animate={{ 
-              opacity: [0.7, 1, 0.7]
+            animate={{
+              opacity: [0.7, 1, 0.7],
             }}
-            transition={{ 
+            transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
-          >Recently used</motion.h3>
+          >
+            Recently used
+          </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <ActionCard icon={<PiExamBold className="text-blue-500 text-xl rounded-full" />} title="Exam List" />
-            <ActionCard icon={<PiStudentBold className="text-blue-500 text-xl" />} title="Student List" />
-            <ActionCard icon={<MdOutlineImportContacts className="text-orange-500 text-xl" />} title="Batch Import" />
+            <ActionCard icon={<PiExamBold className="text-blue-500 text-xl rounded-full" />} title="Exam List" onClick={() => navigate("/creator-viewexam")}/>
+            
           </div>
         </motion.div>
       </motion.div>
@@ -302,45 +324,45 @@ const CDashboard = () => {
 };
 
 const ActionCard = ({ icon, title, onClick }: any) => (
-  <motion.div 
+  <motion.div
     className="bg-white rounded-xl shadow p-4 flex items-center gap-3 cursor-pointer hover:shadow-md transition"
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
-    whileHover={{ 
+    whileHover={{
       scale: 1.05,
-      boxShadow: "0 8px 16px rgba(0,0,0,0.1)"
+      boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
     }}
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
   >
-    <motion.div 
+    <motion.div
       className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full"
-      whileHover={{ 
+      whileHover={{
         rotate: 360,
         backgroundColor: "#f0f0f0",
-        transition: { duration: 0.5 }
+        transition: { duration: 0.5 },
       }}
     >
       <motion.div
-        animate={{ 
+        animate={{
           scale: [1, 1.2, 1],
-          rotate: [0, 10, -10, 0]
+          rotate: [0, 10, -10, 0],
         }}
-        transition={{ 
+        transition={{
           duration: 2,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
       >
         {icon}
       </motion.div>
     </motion.div>
-    <motion.span 
+    <motion.span
       className="text-sm font-medium"
-      whileHover={{ 
+      whileHover={{
         color: "#6985f7",
-        scale: 1.05
+        scale: 1.05,
       }}
     >
       {title}

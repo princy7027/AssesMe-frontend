@@ -81,10 +81,10 @@ const CLeaderBoard = () => {
             </thead>
             <tbody>
               {studentPerformance.map((student, idx) => {
-                const attempted = student.totalAttempted;
+                const attempted = examDetails.numberOfQuestions;
                 const correct = student.correctAnswers;
                 const wrong = student.wrongAnswers;
-                const isPassed = student.isPassed;
+                const isPassed = student.status;
 
                 return (
                   <tr

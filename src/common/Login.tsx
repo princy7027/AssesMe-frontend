@@ -142,7 +142,7 @@ const Login = () => {
                       onChange={(e) => setSelectedRole(e.target.value)}
                       className=" border text-black text-sm rounded-[10px] focus:outline-[#404042] block w-full p-2.5"
                     >
-                      <option value="student">Admin</option>
+                      <option value="admin">Admin</option>
                       <option value="student">Student</option>
                       <option value="creator">Creator</option>
                     </select>

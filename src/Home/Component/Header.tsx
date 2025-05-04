@@ -17,7 +17,7 @@ const Header = () => {
         <nav className="bg-[#FF884D] text-white ">
           <div className="flex">
             <div>
-              <img src={homeLogo} className="w-40 h-24" alt="Logo" />
+              <img src={homeLogo} className="w-32 h-24" alt="Logo" />
             </div>
             <ul className="flex p-8 basis-3/6 text-xl	 gap-9 ml-4 cursor-pointer	">
               <li onClick={() => handleScrollToSection("heroSection")}>Home</li>

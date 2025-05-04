@@ -104,8 +104,6 @@ const CDiscussion = () => {
                 <p className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mt-1 max-w-xl">{item.text}</p>
               </div>
 
-              {/* Delete icon shown only if current user is message owner */}
-              {/* {item.studentId?._id === userId && ( */}
               <button
                 onClick={() => handleDelete(item._id)}
                 className="absolute right-2 top-0 p-2 bg-gray-300 rounded-full text-red-500 hover:text-white hover:bg-red-500 transition duration-200"
@@ -113,8 +111,6 @@ const CDiscussion = () => {
               >
                 <FiTrash size={18} />
               </button>
-
-              {/* )} */}
             </div>
           ))}
         </div>

@@ -13,6 +13,8 @@ const SDiscussion = () => {
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = decodedToken?._id;
   const name = decodedToken?.name;
+  const examName=sessionStorage.getItem('examName');
+
 
   // Fetch discussions
   const fetchDiscussions = async () => {
@@ -91,7 +93,7 @@ const SDiscussion = () => {
     <div className="relative p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto pb-32">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Discussion for Exam</h2>
       <p className="text-gray-600">
-        You are now viewing the discussion for <strong>Exam ID:</strong> {examId}
+        You are now viewing the discussion for <strong>Exam ID:</strong> {examName}
       </p>
 
       <div className="mt-6">
@@ -99,17 +101,16 @@ const SDiscussion = () => {
 
         <div className="space-y-4">
           {messages.map((item, index) => (
-            <div key={index} className="flex items-start space-x-3">
+            <div key={index} className="flex items-start space-x-3 group relative">
               <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0"></div>
               <div>
                 <p className="text-sm text-gray-500">{item?.studentId?.name || "Unknown"}</p>
                 <p className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mt-1">{item.text}</p>
               </div>
-              {/* Delete icon shown only if current user is message owner */}
               {item?.studentId?._id === userId && (
                 <button
                   onClick={() => handleDelete(item._id)}
-                  className="absolute right-2 top-0 text-red-500 hover:text-red-700"
+                  className="absolute right-2 top-0 p-2 bg-gray-300 rounded-full text-red-500 hover:text-white hover:bg-red-500 transition duration-200"
                   title="Delete message"
                 >
                   <FiTrash />

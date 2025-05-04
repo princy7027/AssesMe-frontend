@@ -75,7 +75,7 @@ const GiveExam = () => {
       if (res.data.success) {
         setTimeLeft(0);
         localStorage.setItem("resultData", JSON.stringify(res.data));
-        navigate(`/std-result/${examId}/${userId}`);
+        navigate(`/std-result-all/${userId}/${examId}`);
       }
       alert("Exam submitted successfully!");
     } catch (error) {

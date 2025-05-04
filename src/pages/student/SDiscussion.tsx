@@ -93,7 +93,7 @@ const SDiscussion = () => {
     <div className="relative p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto pb-32">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Discussion for Exam</h2>
       <p className="text-gray-600">
-        You are now viewing the discussion for <strong>Exam ID:</strong> {examName}
+        You are now viewing the discussion for <strong>Exam Name:</strong> {examName}
       </p>
 
       <div className="mt-6">

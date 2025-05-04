@@ -25,20 +25,23 @@ const SResult_all = () => {
         console.log(response, "data of result");
 
         const { examDetails, resultDetails } = response.data.data;
-
+        const marksPerQuestion = examDetails.totalMarks / examDetails.numberOfQuestions;
+        const correctQuestions = resultDetails.obtainedMarks / marksPerQuestion;
+        const wrongQuestions = examDetails.numberOfQuestions - correctQuestions;
+        
         setStudentInfo({
           name: decodedToken?.name || "Student", // from token
           subject: examDetails.subject,
           totalMarks: examDetails.totalMarks,
           passingMarks: examDetails.passingMarks,
           totalQuestions: examDetails.numberOfQuestions,
-          highestMarks: examDetails.totalMarks, // no field in API, so fallback
-          lowestMarks: 0, // no field in API, so fallback
           obtainedMarks: resultDetails.obtainedMarks,
           percentage: resultDetails.percentage,
           passStatus: resultDetails.isPassed,
           strongAreas: resultDetails.strongAreas.map((area) => area.questionTopic),
           weakAreasSummary: resultDetails.weakAreas.map((area) => area.questionTopic),
+          correctQuestions: correctQuestions,
+  wrongQuestions: wrongQuestions,
         });
 
         setWeakAreas(resultDetails.weakAreas || []);
@@ -72,8 +75,8 @@ const SResult_all = () => {
       <div className="grid grid-cols-3 gap-6 mt-6">
         <div className="flex items-center justify-between bg-white text-black rounded-xl px-6 py-4 shadow-md">
           <div>
-            <p className="text-sm font-medium">Highest Marks: {studentInfo?.highestMarks}</p>
-            <p className="text-sm mt-1">Lowest Marks: {studentInfo?.lowestMarks}</p>
+            <p className="text-sm font-medium">Correct Questions: {studentInfo?.correctQuestions}</p>
+            <p className="text-sm mt-1">Wrong Questions : {studentInfo?.wrongQuestions}</p>
           </div>
         </div>
 

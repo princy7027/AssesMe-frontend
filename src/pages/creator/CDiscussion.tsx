@@ -12,6 +12,7 @@ const CDiscussion = () => {
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = decodedToken?._id;
   const name = decodedToken?.name;
+  const examName=sessionStorage.getItem('examName');
 
   // Fetch discussions
   const fetchDiscussions = async () => {
@@ -89,7 +90,7 @@ const CDiscussion = () => {
     <div className="relative p-6 w-[1300px] ml-[230px] bg-[#f8f9fc] min-h-screen overflow-y-auto pb-32">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Discussion for Exam</h2>
       <p className="text-gray-600">
-        You are now viewing the discussion for <strong>Exam ID:</strong> {examId}
+        You are now viewing the discussion for <strong>Exam Name:</strong> {examName}
       </p>
 
       <div className="mt-6">

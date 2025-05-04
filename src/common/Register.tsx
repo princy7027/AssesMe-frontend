@@ -10,7 +10,6 @@ import image from "@/assets/registerlogo.png";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { usePostUserMutation } from "@/store/services/Register.service";
 import axios from "axios";
 
 const Register = () => {
@@ -21,9 +20,9 @@ const Register = () => {
   const form = useForm<z.infer<typeof regiSchema>>({
     resolver: zodResolver(regiSchema),
     defaultValues: {
-      name: "Princy",
-      email: "princy@gmail.com",
-      password: "pri@123",
+      name: "",
+      email: "",
+      password: "",
      
     },
   });
@@ -31,12 +30,6 @@ const Register = () => {
   useEffect(() => {
     sessionStorage.clear();
   }, []);
-
-  // const [clickCount, setClickCount] = useState(0);
-  // const handleClick = () => {
-  //   setClickCount(prev => prev + 1);
-  //   console.log("Button clicked", clickCount + 1);
-  // };
   
   const onSubmit = async (e: z.infer<typeof regiSchema>) => {
     const formData = new FormData();

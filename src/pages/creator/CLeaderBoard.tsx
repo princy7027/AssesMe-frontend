@@ -73,6 +73,7 @@ const CLeaderBoard = () => {
               <tr className="text-left">
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Status</th>
+                <th className="px-6 py-3">Ontained marks</th>
                 <th className="px-6 py-3">Attempted</th>
                 <th className="px-6 py-3">Correct</th>
                 <th className="px-6 py-3">Wrong</th>
@@ -81,10 +82,14 @@ const CLeaderBoard = () => {
             </thead>
             <tbody>
               {studentPerformance.map((student, idx) => {
+                const marksPerQuestion = examDetails.totalMarks / examDetails.numberOfQuestions;
                 const attempted = examDetails.numberOfQuestions;
-                const correct = student.correctAnswers;
-                const wrong = student.wrongAnswers;
-                const isPassed = student.status;
+                const totalMarks = student.marks; 
+                const passingMarks = examDetails.passingMarks;
+                const correct = Math.floor(student.marks / marksPerQuestion);
+                const wrong = examDetails.numberOfQuestions - correct;
+                const marks =student.marks;
+                const isPassed = totalMarks >= passingMarks;
 
                 return (
                   <tr
@@ -103,6 +108,7 @@ const CLeaderBoard = () => {
                         {isPassed ? "PASSED" : "FAILED"}
                       </span>
                     </td>
+                    <td className="px-6 py-3">{marks}</td>
                     <td className="px-6 py-3">{attempted}</td>
                     <td className="px-6 py-3">{correct}</td>
                     <td className="px-6 py-3">{wrong}</td>
